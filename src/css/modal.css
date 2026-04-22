@@ -1,0 +1,25 @@
+.modal {
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    height: fit-content;
+    width: 80%;
+}
+
+.modal .item-list {
+    display: grid;
+    
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.modal .item-list-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    max-height: 300px;
+    overflow-y: auto;
+}
