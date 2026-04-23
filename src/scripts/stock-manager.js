@@ -1,173 +1,171 @@
-//Stock Items 
+//Item handling
 const stock = new Map()
 
 let nextItemId = 1
-const createItemId = () => (`item-${nextItemId++}`)
+const createItemId = () => (`i-${nextItemId++}`)
 
-function addItem({name, category, quantity = 0, notify = 0}) {
-    if (!name) {return false}
+/*  
+    Item format: {id: number, name: string, category: string, quantity: number, minimum: number}
+*/
+
+function createItem({name, category, quantity = 0, minimum = 0}) {
+    if (!name || !category) {return false}
 
     const id = createItemId()
-    const item = {id, name, category, quantity, notify}
+    const item = {id, name, category, quantity, minimum}
 
     stock.set(id, item)
-    saveManager()
     return id
-}
-
-function removeItem(id) {
-    for (const [setId, set] of sets) {
-        set.items = set.items.filter(item => item.id != id)
-    }
-
-    stock.delete(id)
-    saveManager()
-}
-
-function editItem(id, {name, category, quantity, notify}) {
-    const item = stock.get(id)
-    if (!item) {return false}
-
-    item.name = name ?? item.name
-    item.category = category ?? item.category
-    item.quantity = quantity ?? item.quantity
-    item.notify = notify ?? item.notify
-
-    saveManager()
-    return true
 }
 
 function readItem(id) {
     return stock.get(id)
 }
 
-//Stock sets
-const sets = new Map()
+function updateItem(id, {name, category, quantity, minimum}) {
+    const item = stock.get(id)
+    if (!item) {return false}
 
-let nextSetId = 1
-const createSetId = () => (`set-${nextSetId++}`)
+    item.name = name ?? item.name
+    item.category = category ?? item.category
+    item.quantity = quantity ?? item.quantity
+    item.minimum = minimum ?? item.minimum
 
-//set items length might be 0
-function addSet(name, items) {
-    if ((!name) || (!items)) {return false}
-
-    const id = createSetId()
-    const set = {id, name, items}
-
-    sets.set(id, set)
-    saveManager()
-    return id
-}
-
-function removeSet(id) {
-    sets.delete(id)
-    saveManager()
-}
-
-function editSet(id, {name, items}) {
-    const set = sets.get(id)
-    if (!set) {return false}
-
-    set.name = name ?? set.name
-    set.items = items ?? set.items
-
-    saveManager()
     return true
 }
 
-function readSetElement(id) {
-    return sets.get(id)
-}
-
-function readSets() {
-    return Array.from(sets, ([id, set]) => ({id, name: set.name, items: set.items}))
-}
-
-//Aditional functs
-function checkAlerts() {
-    const alerts = []
-
-    for (const [id, {quantity, notify}] of stock) {
-        if (quantity <= notify) {alerts.push(id)}
+function deleteItem(id) {
+    //Remove item from bundles
+    for (const [bundleId, bundle] of bundles) {
+        bundle.items = bundle.items.filter(item => item.id != id)
     }
 
-    if (alerts.length == 0) {return false}
+    stock.delete(id)
+}
+
+//Bundle handling
+const bundles = new Map()
+
+let nextBundleId = 1
+const createBundleId = () => (`b-${nextBundleId++}`)
+
+/*
+    Bundle format: {id: number, name: string, items: [{id: number, quantity: number}]}
+*/
+
+function createBundle(name, items) {
+    if (!name || !items) {return}
+
+    const id = createBundleId()
+    const bundle = {id, name, items}
+
+    bundles.set(id, bundle)
+    return id
+}
+
+function readBundleElement(id) {
+    return bundles.get(id)
+}
+
+function readBundles() {
+    return Array.from(bundles, ([id, bundle]) => ({id: bundle.id, name: bundle.name, items: bundle.items}))
+}
+
+function updateBundle(id, name, items) {
+    const bundle = bundles.get(id)
+    if (!bundle) {return false}
+
+    bundle.name = name ?? bundle.name
+    bundle.items = items ?? bundle.items
+
+    return true
+}
+
+function deleteBundle(id) {
+    bundles.delete(id)
+}
+
+//Aditional functions
+function getAlerts() {
+    const alerts = []
+
+    for (const [id, { quantity, minimum }] of stock) {
+        if (quantity <= minimum) {alerts.push(id)}
+    }
+
     return alerts
 }
 
 function readStock() {
     const stockObject = {}
-    
-    for (const [id, { name, category, quantity, notify }] of stock) {
-        if (!stockObject[category]) {stockObject[category] = []}
 
-        stockObject[category].push({id, name, quantity, notify})  
+    for (const [id, { name, category, quantity, minimum }] of stock) {
+        if (!stockObject[category]) {stockObject[category] = []}
+        stockObject[category].push({ id, name, category, quantity, minimum })
     }
 
     return Object.entries(stockObject).map(([category, items]) => ({category, items}))
 }
 
-function saveManager() {    
-    const arrayStock = readStock()
-    const stringStock = JSON.stringify(arrayStock)
+function save() {
+    const stockArray = readStock()
+    const stockString = JSON.stringify(stockArray)
 
-    const arraySets = readSets()
-    const stringSets = JSON.stringify(arraySets)
+    const bundleArray = readBundles()
+    const bundleString = JSON.stringify(bundleArray)
 
     localStorage.setItem('nextItemId', nextItemId.toString())
-    localStorage.setItem('nextSetId', nextSetId.toString())
-    localStorage.setItem('stock', stringStock)
-    localStorage.setItem('sets', stringSets)
+    localStorage.setItem('nextBundleId', nextBundleId.toString())
+    localStorage.setItem('stock', stockString)
+    localStorage.setItem('bunldes', bundleString)
 }
 
-function loadManager() {
+function load() {
     const savedItemId = localStorage.getItem('nextItemId')
     if (savedItemId) {nextItemId = Number(savedItemId)}
-    
-    const savedSetId = localStorage.getItem('nextSetId')
-    if (savedItemId) {nextSetId = Number(savedSetId)}
-    
-    const stringStock = localStorage.getItem('stock')
-    if (stringStock) {
-        const parsedStock = JSON.parse(stringStock)
 
-        for (const {category, items} of parsedStock) {
+    const savedBundleId = localStorage.getItem('nextBundleId')
+    if (savedBundleId) {nextBundleId = Number(savedBundleId)}
+
+    const stockString = localStorage.getItem('stock')
+    if (stockString) {
+        const parsedStock = JSON.parse(stockString)
+
+        for (const { category, items } of parsedStock) {
             for (const item of items) {
-                stock.set(item.id, {category, ...item})
+                stock.set(item.id, item)
             }
         }
     }
 
-    const stringSets = localStorage.getItem('sets')
-    if (stringSets) {
-        const parsedSets = JSON.parse(stringSets)
+    const bundleString = localStorage.getItem('bundle')
+    if (bundleString) {
+        const parsedBundles = JSON.parse(bundleString)
 
-        for (const set of parsedSets) {
-            sets.set(set.id, {...set})
+        for (const bundle of parsedBundles) {
+            bundles.set(bundle.id, {...bundle})
         }
     }
 }
 
-//localStorage.clear()
-loadManager()
+//Load manager
+load()
 
 export const stockManager = {
-    items: {
-        add: addItem,
-        remove: removeItem,
-        edit: editItem,
-        get: readItem
+    itemManager: {
+        create: createItem,
+        read: readItem,
+        update: updateItem,
+        delete: deleteItem
     },
-
-    sets: {
-        add: addSet, 
-        remove: removeSet,
-        edit: editSet, 
-        get: readSetElement,
-        getAll: readSets
+    bundleManager: {
+        create: createBundle,
+        read: readBundleElement,
+        update: updateBundle,
+        delete: deleteBundle,
+        readAll: readBundles
     },
-    get: readStock,
-    alerts: checkAlerts,
-    save: saveManager
+    read: readStock,
+    alerts: getAlerts,
+    save: save
 }
-

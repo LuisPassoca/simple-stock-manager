@@ -1,6 +1,7 @@
 import { global } from "../../scripts/global-variables.js"
 import { render } from "../../scripts/renderer.js"
 import { stateCallback } from "../../scripts/state-callback.js"
+import { ItemModal } from "../components/item-modal.js"
 import { ItemList } from "../components/item-list.js"
 import { ItemOperations } from "../components/item-operations.js"
 
@@ -9,7 +10,10 @@ const display = () => {
     return(` 
         <div class='items-tab'>
             <div class='flex-row'>
-                <input type='text' class='search-bar' placeholder='Buscar um item...' />
+                <div class='search-bar-wrapper'>
+                    <input type='text' class='search-bar' placeholder='Buscar um item...' />
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
                 <button class='add-item'> Adicionar item </button>
             </div>
 
@@ -22,6 +26,7 @@ const display = () => {
                 </select>
             </div>
 
+            <div class='separator-line'></div>
             <div class='item-list'></div>
         </div>
 
@@ -37,6 +42,11 @@ const setup = () => {
     const searchBar = root.querySelector('.search-bar')
     const orderSelector = root.querySelector('.order-selector')
     const addItemButton = root.querySelector('.add-item')
+
+    //Setup add button
+    addItemButton.addEventListener('click', () => {
+        global.get('render/modal-display').state = ItemModal
+    })
 
     //Setup item list
     global.set('render/item-list', stateCallback(null, () => {render(ItemList, itemListDiv)}))

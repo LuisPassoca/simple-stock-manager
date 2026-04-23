@@ -1,4 +1,6 @@
 export async function render(page, root = document.querySelector('#root'), props = {}) {
+    if (!page) {return}
+    
     root.innerHTML = ''
 
     if (page.style) {

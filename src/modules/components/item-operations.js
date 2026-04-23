@@ -3,7 +3,8 @@ const display = () => {
     return(` 
         <h3> Operações </h3>
 
-        <p> Categoria X - Item 1 => +10 = 100</p>
+        <span> Categoria X </span>
+        <span> Item 1 > 70 + 10 = 80 </span>
     `)
 }
 

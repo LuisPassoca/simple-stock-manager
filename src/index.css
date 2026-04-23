@@ -88,3 +88,33 @@ body, html {
         margin-left: auto;
     }
 }
+
+.flex-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        
+        input, select {
+            height: 21px;
+            flex-grow: 1;
+        }
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.modal-display {
+    padding: 20px;
+
+    h2 {
+        margin: 0;
+    }
+}

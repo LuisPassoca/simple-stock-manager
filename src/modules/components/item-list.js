@@ -1,97 +1,31 @@
+import { stockManager } from "../../scripts/stock-manager.js"
+
 const display = () => {
+    const stock = stockManager.read()
 
     return(` 
-        <div class='category'>
-            <h2> Categoria X <i class="fa-solid fa-angle-up"></i> </h2>
 
-            <div class='category-items'>
-                <span> Nome </span>
-                <span> Qtd. </span>
-                <span> Operação </span>
+        ${stock.map(({category, items}) => (`
+            <div class='category'>
+                <h2> ${category} <i class="fa-solid fa-angle-up"></i> </h2>
 
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
+                <div class='category-items'>
+                    <span> Nome </span>
+                    <span> Qtd. </span>
+                    <span> Operação </span>
 
-                <span> Item 2 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
+                    ${items.map(({id, name, quantity}) => (`
+                        <span> ${name} </span>
+                        <span> ${quantity} un. </span> 
+                        <div class='item-operations' data-id='${id}'> 
+                            <input type='number' />
+                            <button> <i class="fa-solid fa-check"></i> </button>
+                            <button> <i class="fa-regular fa-pen-to-square"></i> </button>
+                        </div>
+                    `)).join('')}
                 </div>
             </div>
-        </div>
-
-        <div class='category'>
-            <h2> Categoria Y <i class="fa-solid fa-angle-up"></i> </h2>
-
-            <div class='category-items'>
-                <span> Nome </span>
-                <span> Qtd. </span>
-                <span> Operação </span>
-
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
-
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
-
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
-
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
-
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
-
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
-
-                <span> Item 1 </span>
-                <span> 0 un. </span> 
-                <div class='item-operations'> 
-                    <input type='number' />
-                    <button> <i class="fa-solid fa-check"></i> </button>
-                    <button> <i class="fa-regular fa-pen-to-square"></i> </button>
-                </div>
-            </div>
-        </div>
+        `)).join('')}
 
     `)
 }

@@ -31,10 +31,16 @@ const display = () => {
 const setup = (props) => {
     const root = document.querySelector('#root')
     const alertsDisplayDiv = root.querySelector('.alerts-display')
-    const tabDisplay = root.querySelector('.tab-display')
+    const tabDisplayDiv = root.querySelector('.tab-display')
+    const modalDisplayDiv = root.querySelector('.modal-display')
+    
 
     //Setup alerts display
     global.set('render/alerts-display', stateCallback(null, () => {render(AlertsDisplay, alertsDisplayDiv)}))
+
+    //Setup modal display
+    //Using v as the rendering value so we can dynamically render modals
+    global.set('render/modal-display', stateCallback(null, (v) => {render(v, modalDisplayDiv)}))
     
     //Tab selector
     const tabButtons = root.querySelectorAll('.tab-button')
@@ -54,7 +60,7 @@ const setup = (props) => {
         activeButton.classList.add('active-tab')
 
         const tabToRender = tabRefs[v]
-        render(tabToRender, tabDisplay)
+        render(tabToRender, tabDisplayDiv)
     })
 
     tabButtons.forEach(button => button.addEventListener('click', () => {currentTab.state = button.id}))
