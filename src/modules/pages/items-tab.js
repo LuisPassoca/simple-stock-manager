@@ -4,6 +4,7 @@ import { stateCallback } from "../../scripts/state-callback.js"
 import { ItemModal } from "../components/item-modal.js"
 import { ItemList } from "../components/item-list.js"
 import { ItemOperations } from "../components/item-operations.js"
+import { stockManager } from "../../scripts/stock-manager.js"
 
 const display = () => {
 
@@ -16,7 +17,7 @@ const display = () => {
                 </div>
                 <button class='add-item'> Adicionar item </button>
             </div>
-
+        
             <div class='flex-row order-row'>
                 <label for='order-selector'> Ordenar: </label>
                 <select class='order-selector'>
@@ -39,20 +40,41 @@ const setup = () => {
     const itemListDiv = root.querySelector('.item-list')
     const itemOperationsDiv = root.querySelector('.operations-tab')
 
+    const addItemButton = root.querySelector('.add-item')
     const searchBar = root.querySelector('.search-bar')
     const orderSelector = root.querySelector('.order-selector')
-    const addItemButton = root.querySelector('.add-item')
-
+    
     //Setup add button
     addItemButton.addEventListener('click', () => {
-        global.get('render/modal-display').state = ItemModal
+        global.get('render/modal-display').state = { page: ItemModal }
     })
 
-    //Setup item list
-    global.set('render/item-list', stateCallback(null, () => {render(ItemList, itemListDiv)}))
+    //Setup item list & handle search and order
+    const renderItemList = stateCallback(null, () => {
+        const search = searchBar.value
+        const order = orderSelector.value
+
+        render(ItemList, itemListDiv, { search, order })
+    })
+
+    global.set('render/item-list', renderItemList)
+
+    searchBar.addEventListener('input', () => {
+        renderItemList.reload()
+    })
+
+    orderSelector.addEventListener('change', () => {
+        renderItemList.reload()
+    })
 
     //Setup item operations
     global.set('render/operations-tab', stateCallback(null, () => {render(ItemOperations, itemOperationsDiv)}))
+
+    //Setup printing
+    global.set('functions/print-function', () => {
+        const content = JSON.stringify(stockManager.read())
+        return {content}
+    })
 }
 
 const style = "./modules/pages/styles/items-tab.css"

@@ -39,8 +39,7 @@ const setup = (props) => {
     global.set('render/alerts-display', stateCallback(null, () => {render(AlertsDisplay, alertsDisplayDiv)}))
 
     //Setup modal display
-    //Using v as the rendering value so we can dynamically render modals
-    global.set('render/modal-display', stateCallback(null, (v) => {render(v, modalDisplayDiv)}))
+    global.set('render/modal-display', stateCallback({ page: null }, ({ page, props }) => {render(page, modalDisplayDiv, props)}))
     
     //Tab selector
     const tabButtons = root.querySelectorAll('.tab-button')
@@ -65,9 +64,13 @@ const setup = (props) => {
 
     tabButtons.forEach(button => button.addEventListener('click', () => {currentTab.state = button.id}))
 
+    //Handle printing
+    global.set('functions/print-function', () => ({ content: 'Hello world!' }))
+
     printButton.addEventListener('click', () => {
-        console.log(currentTab.state)
-        print(`${currentTab.state}`)
+        const printFunction = global.get('functions/print-function')
+        const { content , style } = printFunction()
+        print(`${content}`, style)
     })
 }
 

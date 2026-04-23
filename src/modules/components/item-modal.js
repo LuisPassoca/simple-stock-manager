@@ -51,8 +51,8 @@ const display = ({ edit = false, id }) => {
                 </div>
 
                 <button type='submit'> ${edit ? 'Editar' : 'Adicionar'} </button>
-                <button type='button' class='cancel'> Cancelar </button>
                 ${edit ? `<button type='button' class='remove'> Remover </button>` : ''}
+                <button type='button' class='cancel'> Cancelar </button>
             </form>
         </div>
     `)
@@ -109,6 +109,16 @@ const setup = ({ edit = false, id }) => {
     //Handle cancel
     const cancelButton = modal.querySelector('.cancel')
     cancelButton.addEventListener('click', () => {modal.close()})
+
+    //Handle remove
+    if (edit) {
+        const removeButton = modal.querySelector('.remove')
+        removeButton.addEventListener('click', () => {
+            const confirm = window.eAPI.confirm('Tem certeza que deseja excluir este item?')
+            if (confirm) {itemManager.delete(id)}
+            closeModal()
+        })
+    }
 
     modal.showModal()
 }
