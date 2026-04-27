@@ -117,7 +117,7 @@ function save() {
     localStorage.setItem('nextItemId', nextItemId.toString())
     localStorage.setItem('nextBundleId', nextBundleId.toString())
     localStorage.setItem('stock', stockString)
-    localStorage.setItem('bunldes', bundleString)
+    localStorage.setItem('bundles', bundleString)
 }
 
 function load() {
@@ -138,7 +138,7 @@ function load() {
         }
     }
 
-    const bundleString = localStorage.getItem('bundle')
+    const bundleString = localStorage.getItem('bundles')
     if (bundleString) {
         const parsedBundles = JSON.parse(bundleString)
 
@@ -168,4 +168,73 @@ export const stockManager = {
     read: readStock,
     alerts: getAlerts,
     save: save
+}
+
+export class ItemOperationManager {
+    operations = new Map()
+    // operations = {{id, operation}}
+
+    set(id, operation) {
+        const item = stock.get(id)
+        if (!item) {return false}
+
+        if (operation == 0) {
+            this.operations.delete(id)
+            return false
+        }
+
+        const floor = item.quantity * (-1)
+        if (operation < floor) {return false}
+
+        this.operations.set(id, operation)
+        return true
+    }
+
+    get(id) {
+        return this.operations.get(id)
+    }
+
+    getAll() {
+        // return [{id: 'item-1', operation: -10, result: 0}]
+        return Array.from(this.operations)
+            .map(([id, operation]) => {
+                const item = stock.get(id)
+                const result = item.quantity + operation
+                return({ id, operation, result })
+            }
+        )
+    }
+
+    apply(id) {
+        const item = stock.get(id)
+        if (!item) {
+            this.operations.delete(id)
+            return false
+        }
+
+        const operation = this.operations.get(id)
+        if (!operation) {return false}
+
+        item.quantity += operation
+        this.operations.delete(id)
+        return true
+    }
+
+    applyAll() {
+        for (const [key, value] of this.operations) {
+            this.apply(key)
+        }
+    }
+
+    pending() {
+        for (const [key, value] of this.operations) {
+            const item = stock.get(key)
+            if (!item) {
+                this.operations.delete(key)
+                return false
+            }
+        }
+
+        return (this.operations.size > 0)
+    }
 }

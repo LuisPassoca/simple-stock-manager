@@ -1,25 +1,70 @@
 .tab-display {
     display: grid;
     grid-template-columns: 0.75fr 0.25fr;
+
+    display: flex;
+    flex-direction: row;
+
     gap: 10px;
 }
 
 .operations-tab {
+    background-color: var(--secondary-background-color);
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: var(--secondary-background-color);
+    gap: 5px;
 
-    h3 {
-        margin: 5px auto;
-        justify-self: center;
+    width: 300px;
+    height: 100%;
+    overflow-y: auto;
+
+    h3 {margin: 5px auto}
+    p, b, i {margin: 0}
+    .apply-all{margin-top: auto}
+    .positive {color: var(--semantic-success)}
+    .negative {color: var(--semantic-danger)}
+
+    .operation-card {
+        background-color: var(--primary-background-color);
+        border-radius: 5px;
+        padding: 10px;
+        gap: 4px;
+
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .card-row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .card-row > :last-child {
+        margin-left: auto;
+    }
+
+    .card-row b:first-child, .card-row i:first-child {
+        flex: 1 1 25%;
+        min-width: 0;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
 
 .items-tab {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     min-height: 0;
+
+    width: 100%;
+    min-width: 0;
 
     .flex-row {
         display: flex;
@@ -64,15 +109,43 @@
     overflow-y: auto;
     padding-right: 5px;
 
+    width: 100%;
+    min-width: 0;
+    
     h2 {
         cursor: pointer;
-        width: fit-content;
+        min-width: 0;
+        display: flex;
+
+        span {
+            flex: 1;
+            min-width: 0;
+    
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     }
 
     .category-items {
         display: grid;
         grid-template-columns: 1fr max-content max-content;
-        gap: 5px 20px;
+        gap: 10px 20px;
+
+        .item-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .item-quantity {
+            text-align: end;
+        }
+
+        .item-name:hover {
+            font-style: italic;
+            cursor: pointer;
+        }
 
         span {
             border-bottom: rgba(0, 0, 0, 0.35) solid 1px;
@@ -86,4 +159,12 @@
 
         input {width: 100px;}
     }
+}
+
+#item-category {
+    width: 200px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

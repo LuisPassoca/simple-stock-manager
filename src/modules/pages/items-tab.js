@@ -4,7 +4,8 @@ import { stateCallback } from "../../scripts/state-callback.js"
 import { ItemModal } from "../components/item-modal.js"
 import { ItemList } from "../components/item-list.js"
 import { ItemOperations } from "../components/item-operations.js"
-import { stockManager } from "../../scripts/stock-manager.js"
+import { ItemOperationManager, stockManager } from "../../scripts/stock-manager.js"
+import { i18n } from "../../scripts/i18n.js"
 
 const display = () => {
 
@@ -12,18 +13,18 @@ const display = () => {
         <div class='items-tab'>
             <div class='flex-row'>
                 <div class='search-bar-wrapper'>
-                    <input type='text' class='search-bar' placeholder='Buscar um item...' />
+                    <input type='text' class='search-bar' placeholder='${i18n.t('search-for-an-item')}' />
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-                <button class='add-item'> Adicionar item </button>
+                <button class='add-item'> ${i18n.t('add-item')} </button>
             </div>
         
             <div class='flex-row order-row'>
-                <label for='order-selector'> Ordenar: </label>
+                <label for='order-selector'> ${i18n.t('order-by')}: </label>
                 <select class='order-selector'>
-                    <option value='name'> Nome </option>
-                    <option value='least'> Menor qtd. </option>
-                    <option value='most'> Maior qtd. </option>
+                    <option value='name'> ${i18n.t('name')} </option>
+                    <option value='least'> ${i18n.t('least')} </option>
+                    <option value='most'> ${i18n.t('most')} </option>
                 </select>
             </div>
 
@@ -49,12 +50,17 @@ const setup = () => {
         global.get('render/modal-display').state = { page: ItemModal }
     })
 
+    //Setup item operations
+    const operationManager = new ItemOperationManager()
+    global.set('functions/operation-manager', operationManager)
+    global.set('render/operations-tab', stateCallback(null, () => {render(ItemOperations, itemOperationsDiv, {operationManager})}))
+
     //Setup item list & handle search and order
     const renderItemList = stateCallback(null, () => {
         const search = searchBar.value
         const order = orderSelector.value
 
-        render(ItemList, itemListDiv, { search, order })
+        render(ItemList, itemListDiv, { search, order, operationManager })
     })
 
     global.set('render/item-list', renderItemList)
@@ -67,11 +73,8 @@ const setup = () => {
         renderItemList.reload()
     })
 
-    //Setup item operations
-    global.set('render/operations-tab', stateCallback(null, () => {render(ItemOperations, itemOperationsDiv)}))
-
     //Setup printing
-    global.set('functions/print-function', () => {
+    global.set('functions/print', () => {
         const content = JSON.stringify(stockManager.read())
         return {content}
     })

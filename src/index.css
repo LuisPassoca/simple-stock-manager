@@ -6,8 +6,8 @@
     --primary-color: #b63d3d;
     --secondary-color: #d8ae66;
 
-    --semantic-success: #6fd866;
-    --semantic-danger: #d86666;
+    --semantic-success: #5B934C;
+    --semantic-danger: #9e4343;
     --semantic-alert: #d8ae66;
 }
 
@@ -47,6 +47,20 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
+}
+
+.header-language-wrapper {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.language-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .tab-selector {

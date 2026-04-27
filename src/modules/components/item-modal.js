@@ -1,4 +1,5 @@
 import { global } from "../../scripts/global-variables.js"
+import { i18n } from "../../scripts/i18n.js"
 import { stockManager } from "../../scripts/stock-manager.js"
 
 const display = ({ edit = false, id }) => {
@@ -16,43 +17,43 @@ const display = ({ edit = false, id }) => {
 
     return(` 
         <div class='flex-wrapper'>
-            <h2> Adicionar item </h2>
+            <h2> ${i18n.t('add-item')} </h2>
 
             <form class='flex-wrapper'>
                 <div class='flex-row'>
-                    <label for='item-name'> Nome: </label>
+                    <label for='item-name'> ${i18n.t('name')}: </label>
                     <input id='item-name' name='name' type='text' value='${item.name}' required />
                 </div>
 
                 <div class='flex-row'>
-                    <label for='item-quantity'> Quantidade: </label>
+                    <label for='item-quantity'> ${i18n.t('quantity')}: </label>
                     <input id='item-quantity' name='quantity' type='number' min='0' placeholder='0' value='${item.quantity}'/>
                     <span> un. </span>
                 </div>
 
                 <div class='flex-row'>
-                    <label for='item-minimum'> Mínimo: </label>
+                    <label for='item-minimum'> ${i18n.t('minimum')}: </label>
                     <input id='item-minimum' name='minimum' type='number' min='0' placeholder='0' value='${item.minimum}' />
                     <span> un. </span>
                 </div>
 
                 <div class='flex-row'>
-                    <label for='item-category'> Categoria: </label>
+                    <label for='item-category'> ${i18n.t('category')}: </label>
                     <select id='item-category' name='category' required>
-                        <option value=''> Selecione uma categoria </option>
-                        <option value='-_add_-'> Adicionar </option>
+                        <option value=''> ${i18n.t('select-a-category')} </option>
+                        <option value='-_add_-'> ${i18n.t('add-category')} </option>
                         ${categories}
                     </select>
                 </div>
 
                 <div class='flex-row hidden'>
-                    <label for='new-category'> Nova categoria: </label>
+                    <label for='new-category'> ${i18n.t('new-category')}: </label>
                     <input id='new-category' name='new-category' type='text' />
                 </div>
 
-                <button type='submit'> ${edit ? 'Editar' : 'Adicionar'} </button>
-                ${edit ? `<button type='button' class='remove'> Remover </button>` : ''}
-                <button type='button' class='cancel'> Cancelar </button>
+                <button type='submit'> ${edit ? `${i18n.t('edit')}` : `${i18n.t('add')}`} </button>
+                ${edit ? `<button type='button' class='remove'> ${i18n.t('remove')} </button>` : ''}
+                <button type='button' class='cancel'> ${i18n.t('cancel')} </button>
             </form>
         </div>
     `)
@@ -65,6 +66,8 @@ const setup = ({ edit = false, id }) => {
     //Handle modal closing
     function closeModal() {
         global.get('render/item-list').reload()
+        global.get('render/operations-tab').reload()
+        global.get('render/alerts-display').reload()
         modal.close()
     }
 
