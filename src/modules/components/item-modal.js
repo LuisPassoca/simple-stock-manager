@@ -90,7 +90,7 @@ const setup = ({ edit = false, id }) => {
         if (edit) {success = itemManager.update(id, item)} 
         else {success = itemManager.create(item)}
         
-        if (!success) {window.alert('Algo deu errado! Por favor tente novamente.')}
+        if (!success) {window.alert(i18n.t('something-went-wrong'))}
         closeModal()
     })
 
@@ -117,7 +117,7 @@ const setup = ({ edit = false, id }) => {
     if (edit) {
         const removeButton = modal.querySelector('.remove')
         removeButton.addEventListener('click', () => {
-            const confirm = window.eAPI.confirm('Tem certeza que deseja excluir este item?')
+            const confirm = window.eAPI.confirm(i18n.t('are-you-sure-item'))
             if (confirm) {itemManager.delete(id)}
             closeModal()
         })

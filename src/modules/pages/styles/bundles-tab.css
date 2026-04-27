@@ -24,3 +24,146 @@
     flex-direction: row;
     gap: 5px;
 }
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 200px 100px 70px;
+    gap: 10px 20px;
+
+    span {border-bottom: rgba(0, 0, 0, 0.35) solid 1px}
+}
+
+.grid-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.span-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.span-wrapper:hover {
+    background-color: rgba(245, 245, 220, 0.75);
+    cursor: pointer;
+}
+
+.item-menu {
+    position: absolute;
+    background-color: rgb(218, 218, 218);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    gap: 5px;
+
+    left: 0;
+    top: 0;
+    padding: 10px;
+
+    .grid-wrapper {
+        flex-grow: 1
+    }
+
+    .items-ok {
+        margin-top: auto;
+    }
+
+    input[type = 'checkbox'] {
+        height: 20px;
+        width: auto;
+        aspect-ratio: 1 / 1;
+        margin: auto;
+    }
+
+    .grid-3 {
+        grid-template-columns: 200px 100px max-content;
+    }
+}
+
+dialog {
+    position: relative;
+}
+
+.item-searchbar {
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.bundle {
+    border-bottom: rgba(0, 0, 0, 0.35) solid 1px;
+}
+
+.bundle-header {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: center;
+    gap: 5px;
+
+    h3 {
+        margin: 10px 0;
+        min-width: 0;
+        display: flex;
+
+        span {
+            flex: 1;
+            min-width: 0;
+    
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+
+    h3:hover {
+        background-color: rgba(245, 245, 220, 0.75);
+        cursor: pointer;
+    }
+}
+
+.bundle-items {
+    display: grid;
+    grid-template-columns: 1fr 100px max-content;
+    margin: 10px 0;
+    gap: 10px 20px;
+
+    span {border-bottom: rgba(0, 0, 0, 0.35) solid 1px}
+    span:nth-last-child(-n + 3){border-bottom: none;}
+
+    .highlight-span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .highlight-span:hover {
+        background-color: rgba(245, 245, 220, 0.75);
+        cursor: pointer;
+    }
+
+    .item-quantity {
+        text-align: end;
+    }
+
+}
+
+.bundle-operations {
+    input {
+        width: 150px;
+    }
+}
+
+.bundle-column-header {
+    display: grid;
+    grid-template-columns: 1fr 225px;
+    gap: 10px;
+
+    h3 {
+        font-weight: normal;
+        margin: 10px 0;
+        border-bottom: rgba(0, 0, 0, 0.35) solid 1px;
+    }
+}

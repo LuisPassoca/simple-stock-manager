@@ -13,7 +13,7 @@ const display = () => {
         <div class='items-tab'>
             <div class='flex-row'>
                 <div class='search-bar-wrapper'>
-                    <input type='text' class='search-bar' placeholder='${i18n.t('search-for-an-item')}' />
+                    <input type='text' class='search-bar' placeholder='${i18n.t('search-for-an-item')}...' />
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
                 <button class='add-item'> ${i18n.t('add-item')} </button>
@@ -75,8 +75,60 @@ const setup = () => {
 
     //Setup printing
     global.set('functions/print', () => {
-        const content = JSON.stringify(stockManager.read())
-        return {content}
+        const stock = stockManager.read()
+        const content = stock.map(c => {
+            const items = c.items.map(i => {
+                return(`
+                    <span> ${i.name} </span>
+                    <span> ${i.quantity} </span>
+                `)
+            }).join('')
+
+            return(`
+                <div class='category'>
+                    <h2> ${c.category} </h2>
+
+                    <div class='items'>
+                        <span> ${i18n.t('name')} </span>
+                        <span> ${i18n.t('qtt')} </span>
+
+                        ${items}
+                    </div>
+                </div>
+            `)
+        }).join('')
+
+        const style = `
+            .category {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                width: 800px;
+                min-width: 0;
+
+                h2 {
+                    font-size: 32px;
+                    overflow-wrap: break-word;
+                }
+                
+                .items {
+                    display: grid;
+                    grid-template-columns: 1fr max-content;
+                    gap: 10px 20px;
+
+                    span {
+                        font-size: 24px;
+                        border-bottom: rgba(0, 0, 0, 0.35) solid 1px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        `
+
+        return {content, style}
     })
 }
 

@@ -38,6 +38,10 @@ function deleteItem(id) {
     //Remove item from bundles
     for (const [bundleId, bundle] of bundles) {
         bundle.items = bundle.items.filter(item => item.id != id)
+
+        if (bundle.items.length == 0) {
+            bundles.delete(bundleId)
+        }
     }
 
     stock.delete(id)
@@ -236,5 +240,74 @@ export class ItemOperationManager {
         }
 
         return (this.operations.size > 0)
+    }
+}
+
+export class BundleOperationManager {
+    operations = new Map()
+
+    set(id, operation) {
+        const bundle = bundles.get(id)
+        if (!bundle) {return false}
+
+        if (operation == 0) {
+            this.operations.delete(id)
+            return false
+        }
+
+        this.operations.set(id, operation)
+        return true
+    }
+
+    get(id) {
+        return this.operations.get(id)
+    }
+
+    apply(id) {
+        const operation = this.operations.get(id)
+        const bundle = bundles.get(id)
+        if (!bundle || !operation) {
+            this.operations.delete(id)
+            return false
+        }
+
+        const valid = this.validate(id)
+        if (valid !== true) {return valid}
+
+        for (const bundleItem of bundle.items) {
+            const stockItem = stock.get(bundleItem.id)
+            stockItem.quantity -= bundleItem.quantity * operation * (-1)
+        }
+
+        this.operations.delete(id)
+        return true
+    }
+
+    pending() {
+        return (this.operations.size > 0)
+    }
+
+    validate(id) {
+        const operation = this.operations.get(id)
+        const bundle = bundles.get(id)
+        if (!bundle || !operation) {
+            this.operations.delete(id)
+            return false
+        }
+
+        const invalidItems = []
+
+        for (const bundleItem of bundle.items) {
+            const stockItem = stock.get(bundleItem.id)
+            const required = bundleItem.quantity * operation * (-1)
+            const result = stockItem.quantity - required
+
+            if (result < 0) {
+                invalidItems.push({id: stockItem.id, required})
+            }
+        }
+
+        if (invalidItems.length > 0) {return invalidItems}
+        else return true
     }
 }

@@ -12,4 +12,22 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+
+    .item-name:hover {
+        background-color: rgba(245, 245, 220, 0.75);
+        cursor: pointer;
+    }
+
+    .item-category {
+        max-width: 100px;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .item-category:hover {
+        background-color: rgba(245, 245, 220, 0.75);
+        cursor: pointer;
+    }
 }

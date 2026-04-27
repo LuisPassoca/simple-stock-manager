@@ -143,7 +143,7 @@
         }
 
         .item-name:hover {
-            font-style: italic;
+            background-color: rgba(245, 245, 220, 0.75);
             cursor: pointer;
         }
 

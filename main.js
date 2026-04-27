@@ -37,6 +37,8 @@ ipcMain.on('confirm', (event, text) => {
         message: text,
         buttons: [i18n.t('yes'), i18n.t('no')],
         defaultId: 1,
+        cancelId: 1,
+        noLink: true
     })
 
     event.returnValue = (result == 0)

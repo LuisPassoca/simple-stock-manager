@@ -34,7 +34,7 @@ const display = ({ search = '', order = 'name', operationManager }) => {
         if (categoryItems.length == 0) {return}
         return(`
             <div class='category'>
-                <h2>  
+                <h2 title='${category}'>  
                     <span> ${category} </span> 
                     <i class="fa-solid fa-angle-up"></i> 
                 </h2>

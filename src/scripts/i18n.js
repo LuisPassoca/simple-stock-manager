@@ -9,7 +9,7 @@ const json = {
         'operations': 'Operations',
         'apply-all': 'Apply all',
         'confirm-apply-all': 'Are you sure you want to apply all operations?',
-        'search-for-an-item': 'Search for an item...',
+        'search-for-an-item': 'Search for an item',
         'add-item': 'Add item',
         'order-by': 'Order by',
         'name': 'Name',
@@ -33,7 +33,18 @@ const json = {
         'save': 'Save',
         'discard': 'Discard',
         'yes': 'Yes',
-        'no': 'No'
+        'no': 'No',
+        'search-for-a-bundle': 'Search for a bundle',
+        'add-bundle': 'Add bundle',
+        'select-items': 'Select items',
+        'add-at-least-one-item': 'Add at least one item!',
+        'something-went-wrong': 'Something went wrong! Please try again.',
+        'are-you-sure-bundle': 'Are you sure you want to delete this bundle?',
+        'are-you-sure-item': 'Are you sure you want to delete this item?',
+        'item': 'Item',
+        'necessary': 'Necessary',
+        'available': 'Available',
+        'error-insufficient': 'Error! The following items are insufficient'
     },
     'pt-br': {
         'my-stock': 'Meu Estoque',
@@ -45,7 +56,7 @@ const json = {
         'operations': 'Operações',
         'apply-all': 'Aplicar todas',
         'confirm-apply-all': 'Tem certeza que deseja aplicar todas as operações?',
-        'search-for-an-item': 'Buscar por um item...',
+        'search-for-an-item': 'Buscar por um item',
         'add-item': 'Adicionar item',
         'order-by': 'Ordenar por',
         'name': 'Nome',
@@ -69,7 +80,18 @@ const json = {
         'save': 'Salvar',
         'discard': 'Descartar',
         'yes': 'Sim',
-        'no': 'Não'
+        'no': 'Não',
+        'search-for-a-bundle': 'Buscar por um conjunto',
+        'add-bundle': 'Adicionar conjunto',
+        'select-items': 'Selecionar itens',
+        'add-at-least-one-item': 'Adicione ao menos um item!',
+        'something-went-wrong': 'Algo deu errado! Por favor tente novamente.',
+        'are-you-sure-bundle': 'Tem certeza que deseja excluir esse conjunto?',
+        'are-you-sure-item': 'Tem certeza que deseja excluir esse item?',
+        'item': 'Item',
+        'necessary': 'Necessário',
+        'available': 'Disponível',
+        'error-insufficient': 'Erro! Os seguintes itens são insuficientes'
     }
 }
 
