@@ -4,5 +4,6 @@ const { contextBridge, ipcRenderer } = require('electron')
 contextBridge.exposeInMainWorld('eAPI', {
     message: (text) => ipcRenderer.sendSync('message', text),
     confirm: (text) => ipcRenderer.sendSync('confirm', text),
-    saveDiscard: (text) => ipcRenderer.sendSync('saveDiscard', text)
+    saveDiscard: (text) => ipcRenderer.sendSync('saveDiscard', text),
+    setLocale: (locale) => ipcRenderer.send('setLocale', locale)
 })

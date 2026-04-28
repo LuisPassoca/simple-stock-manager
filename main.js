@@ -56,3 +56,7 @@ ipcMain.on('saveDiscard', (event, text) => {
 
     event.returnValue = result
 })
+
+ipcMain.on('setLocale', (event, locale) => {
+    i18n.locale = locale
+})

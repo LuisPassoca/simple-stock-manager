@@ -9,7 +9,9 @@ import { render } from "./scripts/renderer.js"
 import { stateCallback } from "./scripts/state-callback.js"
 
 const display = () => {
-    i18n.locale = localStorage.getItem('locale') || 'pt-br'
+    const locale = localStorage.getItem('locale') || 'en'
+    i18n.locale = locale
+    window.eAPI.setLocale(locale)
 
     return(` 
         <div class='header default-padding'>
