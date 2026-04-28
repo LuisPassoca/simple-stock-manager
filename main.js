@@ -14,7 +14,8 @@ const createWindow = () => {
         autoHideMenuBar: true,
         webPreferences: {
             preload: join(__dirname, 'bridge.js')
-        }
+        },
+        icon: join(__dirname, 'src/assets/icon.png')
     })
     mainWindow.loadFile('./src/index.html')
 }

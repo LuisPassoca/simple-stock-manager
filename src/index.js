@@ -46,6 +46,9 @@ const setup = (props) => {
     const alertsDisplayDiv = root.querySelector('.alerts-display')
     const tabDisplayDiv = root.querySelector('.tab-display')
     const modalDisplayDiv = root.querySelector('.modal-display')
+
+    //Setup app title
+    document.title = i18n.t('stock-manager')
     
     //Setup globals
     global.set('render/alerts-display', stateCallback(null, () => {render(AlertsDisplay, alertsDisplayDiv)}))
