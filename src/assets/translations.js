@@ -45,7 +45,9 @@ export const translations = {
         'necessary': 'Necessary',
         'available': 'Available',
         'error-insufficient': 'Error! The following items are insufficient',
-        'stock-manager': 'Stock Manager'
+        'stock-manager': 'Stock Manager',
+        'edit-item': 'Edit item',
+        'edit-bundle': 'Edit bundle'
     },
     'pt-br': {
         'my-stock': 'Meu Estoque',
@@ -93,6 +95,8 @@ export const translations = {
         'necessary': 'Necessário',
         'available': 'Disponível',
         'error-insufficient': 'Erro! Os seguintes itens são insuficientes',
-        'stock-manager': 'Gerenciador de Estoque'
+        'stock-manager': 'Gerenciador de Estoque',
+        'edit-item': 'Editar item',
+        'edit-bundle': 'Editar conjunto'
     }
 }

@@ -133,3 +133,6 @@ body, html {
     }
 }
 
+button, select, input[type='checkbox'] {
+    cursor: pointer;
+}

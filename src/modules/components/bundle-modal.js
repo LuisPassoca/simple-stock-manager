@@ -44,7 +44,7 @@ const display = ({ edit = false, id }) => {
         </div>
 
         <div class='flex-wrapper'>
-            <h2> ${i18n.t('add-bundle')} </h2>
+            <h2> ${edit ? i18n.t('edit-bundle') : i18n.t('add-bundle')}  </h2>
 
             <form class='flex-wrapper'>
                 <div class='flex-row'>
