@@ -56,8 +56,8 @@ For local development:
    ```
 
 ## Scripts
-For this project, I came up with a few scripts, which can all be found under `./src/scripts`. Here is the summarized explanation of them, aswell as some example usages:
-- `stock-manager.js`: Core script of the application, allows you to create and manage items and bundles, aswell as handle operations with them.
+For this project, I came up with a few scripts, which can all be found under `./src/scripts`. Here is the summarized explanation of them, as well as some example usages:
+- `stock-manager.js`: Core script of the application, allows you to create and manage items and bundles, as well as handle operations with them.
 
   ```js
     import { stockManager } from './stock-manager.js'
