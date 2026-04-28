@@ -36,7 +36,11 @@ Simple Stock Manager was originally developed as a real-world solution for a sma
 - HTML / CSS - UI and styling
 
 ## Installation
-> General release coming soon...
+For general usage:
+1. Download the latest release by clicking [here](https://github.com/LuisPassoca/simple-stock-manager/releases/latest).
+2. Unzip the downloaded file.
+3. Run the app by opening the `Simple Stock Manager.exe` file.
+> For easier access, you can create a desktop shortcut to the `.exe` file or right-click it and "Pin to Start"
 
 For local development:
 1. Clone this repository:
