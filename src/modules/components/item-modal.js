@@ -90,7 +90,7 @@ const setup = ({ edit = false, id }) => {
         if (edit) {success = itemManager.update(id, item)} 
         else {success = itemManager.create(item)}
         
-        if (!success) {window.alert(i18n.t('something-went-wrong'))}
+        if (!success) {window.eAPI.message(i18n.t('something-went-wrong'))}
         closeModal()
     })
 

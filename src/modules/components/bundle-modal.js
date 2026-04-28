@@ -157,7 +157,7 @@ const setup = ({ edit = false, id }) => {
 
         const itemInputs = [...modal.querySelectorAll('input[type=number]')]
         if (itemInputs.length == 0) {
-            window.alert(i18n.t('add-at-least-one-item'))
+            window.eAPI.message(i18n.t('add-at-least-one-item'))
             return
         }
 
@@ -168,7 +168,7 @@ const setup = ({ edit = false, id }) => {
         if (edit) {success = bundleManager.update(id, name, items)}
         else {success = bundleManager.create(name, items)}
         
-        if (!success) {window.alert(i18n.t('something-went-wrong'))}
+        if (!success) {window.eAPI.message(i18n.t('something-went-wrong'))}
         closeModal()
     })
 

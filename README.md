@@ -41,7 +41,7 @@ Simple Stock Manager was originally developed as a real-world solution for a sma
 For local development:
 1. Clone this repository:
    ```bash
-   git clone https://github.com/LuisPassoca/simple-stock-manager.git simple-stock-manager
+   git clone https://github.com/LuisPassoca/simple-stock-manager.git
    cd simple-stock-manager
    ```
    
@@ -106,7 +106,7 @@ For this project, I came up with a few scripts, which can all be found under `./
     const display = (props) => {
         //JS code to be executed before loading HTML
   
-        //HTML code in template literal format
+        //HTML in template literal format
         return(` 
             <h1> Hello world! </h1>
         `)

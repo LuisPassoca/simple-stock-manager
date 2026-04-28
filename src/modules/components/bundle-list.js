@@ -102,11 +102,12 @@ const setup = ({ operationManager }) => {
                     return(`${i18n.t('category')}: ${item.category} > ${i18n.t('item')}: ${item.name} > ${i18n.t('necessary')}: ${i.required} > ${i18n.t('available')}: ${item.quantity}`)
                 }).join('\n\n')
 
-                window.alert(`${i18n.t('error-insufficient')}:\n\n${invalidItems}`)
+                window.eAPI.message(`${i18n.t('error-insufficient')}:\n\n${invalidItems}`)
 
                 return
             }
 
+            window.eAPI.message(i18n.t('success-bundle-items'))
             global.get('render/bundle-list').reload()
             global.get('render/alerts-display').reload()
         })

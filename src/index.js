@@ -101,7 +101,7 @@ const setup = (props) => {
         const message = languageSelector.value == 'en' ? 
             'Please restart the app for changes to take effect!'  :
             'Por favor reinicie o aplicativo para efetivar as mudanças!'
-        window.alert(message)    
+        window.eAPI.message(message)    
     })
 
     //Handle printing
