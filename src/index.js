@@ -21,8 +21,8 @@ const display = () => {
                 <div class='language-wrapper'> 
                     <i class="fa-solid fa-language"></i> 
                     <select class='language-selector'> 
-                        <option value='pt-br'> PT-BR </option> 
                         <option value='en'> EN </option> 
+                        <option value='pt-br'> PT-BR </option> 
                     </select> 
                 </div>
             </div>
@@ -96,7 +96,7 @@ const setup = (props) => {
 
     //Handle language
     const languageSelector = root.querySelector('.language-selector') 
-    languageSelector.value = localStorage.getItem('locale') || 'pt-br'
+    languageSelector.value = localStorage.getItem('locale') || 'en'
 
     languageSelector.addEventListener('change', () => {
         localStorage.setItem('locale', languageSelector.value)
